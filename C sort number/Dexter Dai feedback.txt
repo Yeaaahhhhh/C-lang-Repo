@@ -1,0 +1,286 @@
+---------------------- TESTING Dexter Dai's LAB #3 -----------------
+
+-------------------- Test: Show contents of ex3q1.c ---------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int main()
+{
+    int current, previous;
+    printf("Enter integers: ");
+    scanf("%d",&previous);
+    printf("%d ",previous);         //always print out the first integer
+
+    while(scanf("%d",&current)==1){
+        if (current < previous){
+            printf("%d ",current);
+            previous = current;
+        }
+        else{
+            printf("%d ",previous);
+            previous = current;
+
+        }
+        if (current!=(int)current){
+            break;
+        }
+    }
+
+    return 0;
+
+}
+
+------------------ Test: Compile ex3q1.c -------------
+
+------------------ Test: Run ex3q1.c -------------
+---
+Input: test_one.txt
+ File contents: 
+31 -35 -38 -27 17 37 -24 23 46 13 -34x
+
+Your output:                                      Expected output:
+Enter integers: 31 -35 -38 -38 -27 17 -24 -24 23 13 -34       \	Enter integers: 31 -35 -38 -38 -27 17 -24 -24 23 13 -34 
+---
+Input: test_two.txt
+ File contents: 
+12 13 -1 1000 100 100289 999 -9998*
+
+Your output:                                      Expected output:
+Enter integers: 12 12 -1 -1 100 100 999 -9998 		      \	Enter integers: 12 12 -1 -1 100 100 999 -9998 
+---
+Input: test_three.txt
+ File contents: 
+1 2 3 4 5 6 7 8 9 10%
+
+Your output:                                      Expected output:
+Enter integers: 1 1 2 3 4 5 6 7 8 9 			      \	Enter integers: 1 1 2 3 4 5 6 7 8 9 
+---
+Input: test_four.txt
+ File contents: 
+10 9 8 7 6 5
+4 3 2 1
+
+Your output:                                      Expected output:
+Enter integers: 10 9 8 7 6 5 4 3 2 1 			      \	Enter integers: 10 9 8 7 6 5 4 3 2 1 
+---
+Input: test_five.txt
+ File contents: 
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+Your output:                                      Expected output:
+Enter integers: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 \	Enter integers: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+-------------------- Test: Show contents of ex3q2.c ---------------
+#include <stdio.h>
+int main()
+{
+    int a[20];
+    int i;
+
+    FILE *fp = fopen("20_input.txt","r");
+    for(i = 0; !feof(fp);i++)
+        fscanf(fp, "%d",&a[i]);
+    fclose(fp);
+
+    printf("Enter 20 integers: ");
+    for (int i = 0; i<20;i++)
+	printf("%d ",a[i]);
+    int max = a[0];
+    int max2 = a[0];
+
+    for (int i = 1; i<20;i++)
+        if (max < a[i])
+            max = a[i];
+    for (int i = 1; i<20;i++)
+        if (a[i]==max)
+            continue;
+        else if(a[i]>max2)
+            max2 = a[i];
+
+    printf("\nLargest: %d\n", max);
+    printf("Second largest: %d", max2);
+
+    return 0;
+
+}
+
+------------------ Test: Compile ex3q2.c -------------
+
+------------------ Test: Run ex3q2.c -------------
+---
+Input: 20_input.txt
+ File contents: 
+31 -35 -38 -27 17 37 -24 23 46 13 -34 15 28 23 12 10 -20 -7 -11 37
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Largest: 46
+Largest: 46						      |	Second Largest: 37
+Second largest: 37					      <---
+Input: 20_input2.txt
+ File contents: 
+-422 -123 -1234 -2134 -89 -898 -89 -837 -7848 -13274 -847 -83 -1 -2 -3 -4 -5 -6 -1 -2
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Largest: -1
+Largest: 46						      |	Second Largest: -2
+Second largest: 37					      <---
+Input: 20_input_all_neg.txt
+ File contents: 
+-31 -35 -38 -27 -17 -37 -24 -23 -46 -13 -34 -15 -28 -23 -12 -10 -20 -7 -11 -37
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Largest: -7
+Largest: 46						      |	Second Largest: -10
+Second largest: 37					      <---
+Input: 20_input_invalid.txt
+ File contents: 
+-31 -35 -38 -27 -17 -37 -24 -23 -46 -13 c -15 -28 -23 -12 -10 -20 -7 -11 -37
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Invalid value
+Largest: 46						      <
+Second largest: 37					      <---
+Input: 20_input_same_largest_second_largest.txt
+ File contents: 
+3 -7 9 12 -2 9 0 34 16 34 7 -80 -23 6 -2 4 24 -35 3 33
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Largest: 34
+Largest: 46						      |	Second Largest: 33
+Second largest: 37					      <---
+Input: 20_input_same_number.txt
+ File contents: 
+4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+
+Your output:                                      Expected output:
+Enter 20 integers: 31 -35 46 -27 17 37 -24 23 46 13 -34 15 28 |	Enter 20 integers: Largest: 4
+Largest: 46						      |	Second Largest: None
+Second largest: 37					      <
+-------------------- Test: Show contents of ex3q3.c ---------------
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int main()
+{
+    int a[100000];
+    int i;
+
+    FILE *fp = fopen("moves.txt","r");
+    for(i = 0; !feof(fp);i++)
+        fscanf(fp, "%d",&a[i]);
+    fclose(fp);
+
+    int aTotal,bTotal;
+    aTotal = 0;
+    bTotal = 0;
+
+
+    for(i=0; i<100000;i+=2){
+        if (i == sizeof(a)-1 || aTotal >= 1000 || bTotal >=1000){
+            break;
+        }
+        if (a[i] == 1){
+            srand((unsigned)time(NULL));
+            aTotal = aTotal + (rand() % 6 + 1);
+        }
+        else if (a[i] == 2){
+            for(int i = 0; i <2;i++){
+                srand((unsigned)time(NULL));
+                aTotal = aTotal + (rand() % 6 + 1);
+            }
+            aTotal -= 5;
+        }
+        else if (a[i] == 3){
+            for(int i = 0; i <3;i++){
+                srand((unsigned)time(NULL));
+                aTotal = aTotal +(rand() % 6 + 1);
+            }
+            aTotal -= 10;
+        }
+        else if (a[i] == 4){
+            for(int i = 0; i <4;i++){
+                srand((unsigned)time(NULL));
+                aTotal = aTotal +(rand() % 6 + 1);
+            }
+            aTotal -= 20;
+        }
+        if (a[i+1] == 1){
+            srand((unsigned)time(NULL));
+            bTotal += rand() % 6 + 1;
+        }
+        else if (a[i+1] == 2){
+            for(int i = 0; i <2;i++){
+                srand((unsigned)time(NULL));
+                bTotal += (rand() % 6 + 1);
+            }
+            bTotal -= 5;
+        }
+        else if (a[i+1] == 3){
+            for(int i = 0; i <3;i++){
+                srand((unsigned)time(NULL));
+                bTotal += (rand() % 6 + 1);
+            }
+            bTotal -= 10;
+        }
+        else if (a[i+1] == 4){
+            for(int i = 0; i < 4;i++){
+                srand((unsigned)time(NULL));
+                bTotal += (rand() % 6 + 1);
+            }
+            bTotal -= 20;
+        }
+    }
+    if (bTotal >1000)
+        printf("Bob wins with %d points",bTotal);
+    else if (aTotal >1000)
+        printf("Alice wins with %d points",aTotal);
+    else
+        printf("Nobody wins,try again");
+
+
+    return 0;
+
+}
+
+------------------ Test: Compile ex3q3.c -------------
+
+------------------ Test: Run ex3q3.c -------------
+
+Your output:                                      Expected output:
+Nobody wins,try again					      \	Bob wins with 1002 points
+---
+Input: moves_all_ones.txt
+Nobody wins,try again					      \	Bob wins with 1003 points
+---
+Input: moves_all_numbers.txt
+Nobody wins,try again					      \	Bob wins with 1003 points
+---
+Input: moves_invalid_character.txt
+Nobody wins,try again					      \	Invalid input
+---
+Input: moves_invalid_number_5.txt
+Nobody wins,try again					      \	Invalid input
+---
+Input: moves_invalid_number_0.txt
+Nobody wins,try again					      \	Invalid input
+
+----------------------- TA FEEDBACK  -----------------
+Part 1) Great work!
+
+        MARK: 1/1
+
+Part 2) Why are you using fopen? You should be reading from stdin and using input redirection.
+        Otherwise your program is correct
+
+        MARK: 1/1
+
+Part 3) You shouldn't be using fopen here either. 
+        You should also be able to read as many moves as it takes to finish the game.
+        The moves.txt file you provided should end the game
+        You should only be calling srand once
+
+        MARK: 0.5/1
+
+
+
+FINAL GRADE: 2.5/3
